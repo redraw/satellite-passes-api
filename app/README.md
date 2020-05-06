@@ -19,16 +19,7 @@ Connection: keep-alive
 Host: satellites.fly.dev
 User-Agent: HTTPie/1.0.3
 ```
-
 ```
-HTTP/1.1 200 OK
-connection: close
-content-encoding: gzip
-content-type: application/json
-date: Tue, 05 May 2020 23:53:23 GMT
-server: Fly/e30ca00 (2020-05-01)
-transfer-encoding: chunked
-
 [
     {
         "start": {
