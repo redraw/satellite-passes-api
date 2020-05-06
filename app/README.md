@@ -12,7 +12,7 @@ Uses [PyEphem](https://github.com/brandon-rhodes/pyephem) to predict passes, and
 - `limit` number of next passes
 
 ```
-GET /passes/25544?lat=-34.8992466&lon=-57.950359&limit=1 HTTP/1.1
+GET /passes/25544?lat=-34.9112212&lon=-57.9372988&limit=1 HTTP/1.1
 Accept: */*
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
