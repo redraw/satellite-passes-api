@@ -1,14 +1,14 @@
-# Satellite Passes API 🛰️
+# 🛰️ Satellite Passes API
 
 Query next passes for a given satellite above you. 
 
 Uses [PyEphem](https://github.com/brandon-rhodes/pyephem) to predict passes, and [Nasa TLE API](https://github.com/ivanstan/tle-api) to get TLE updated data taken from the greatest [CelesTrak](https://celestrak.com) website.
 
 ## API
-### `GET /passes`
+### `GET /passes/<norad-id>`
 
-- `lat` latitude
-- `lon` longitude
+- `lat` latitude (requeried)
+- `lon` longitude (requeried)
 - `limit` number of next passes
 
 ```
@@ -19,6 +19,7 @@ Connection: keep-alive
 Host: satellites.fly.dev
 User-Agent: HTTPie/1.0.3
 ```
+Response example,
 ```
 [
     {
@@ -45,3 +46,5 @@ User-Agent: HTTPie/1.0.3
 ]
 ```
 The `visible` field actually tells if the satellite will be _probably_ visible, considering the sun is near the horizon, and the observer is at night. You can read more [here](https://www.heavens-above.com/faq.aspx).
+
+Source code: [github](https://github.com/redraw/satellite-passes-api)
