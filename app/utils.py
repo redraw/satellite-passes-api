@@ -1,4 +1,10 @@
+import redis
 import math
+
+import settings
+
+
+cache = redis.Redis.from_url(settings.REDIS_URL, decode_responses=True)
 
 
 def az_to_octant(azimuth):
