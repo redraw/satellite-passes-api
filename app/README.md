@@ -2,7 +2,7 @@
 
 Query next passes for a given satellite above you. 
 
-Uses [PyEphem](https://github.com/brandon-rhodes/pyephem) to predict passes, and [Nasa TLE API](https://github.com/ivanstan/tle-api) to get TLE updated data taken from the greatest [CelesTrak](https://celestrak.com) website.
+Uses [Skyfield](https://github.com/skyfielders/python-skyfield) to predict passes (great library!), and [Nasa TLE API](https://github.com/ivanstan/tle-api) to get TLE updated data taken from the greatest [CelesTrak](https://celestrak.com) website.
 
 ## API
 ### `GET /passes/<norad-id>`
@@ -10,9 +10,10 @@ Uses [PyEphem](https://github.com/brandon-rhodes/pyephem) to predict passes, and
 - `lat` latitude (requeried)
 - `lon` longitude (requeried)
 - `limit` number of next passes
+- `days` number of days to calculate passes ahead
 
 ```
-GET /passes/25544?lat=-34.9112212&lon=-57.9372988 HTTP/1.1
+GET /passes/25544?lat=-34.9112212&lon=-57.9372988&limit=1 HTTP/1.1
 Accept: */*
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
@@ -22,15 +23,7 @@ User-Agent: HTTPie/1.0.3
 Response example,
 ```
 [
-  {
-    "culmination": {
-      "alt": "17.38", 
-      "az": "308.01", 
-      "az_octant": "N", 
-      "is_sunlit": true, 
-      "utc_datetime": "Mon, 01 Jun 2020 14:21:49 GMT", 
-      "utc_timestamp": 1591021309
-    }, 
+  { 
     "rise": {
       "alt": "10.00", 
       "az": "264.51", 
@@ -39,6 +32,14 @@ Response example,
       "utc_datetime": "Mon, 01 Jun 2020 14:19:29 GMT", 
       "utc_timestamp": 1591021169
     }, 
+    "culmination": {
+      "alt": "17.38", 
+      "az": "308.01", 
+      "az_octant": "N", 
+      "is_sunlit": true, 
+      "utc_datetime": "Mon, 01 Jun 2020 14:21:49 GMT", 
+      "utc_timestamp": 1591021309
+    },
     "set": {
       "alt": "9.98", 
       "az": "351.63", 
@@ -48,8 +49,7 @@ Response example,
       "utc_timestamp": 1591021448
     }, 
     "visible": true
-  },
-  ...
+  }
 ]
 ```
 
