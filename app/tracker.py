@@ -37,7 +37,7 @@ class SatTracker:
 
         for pass_times, pass_events in zip(chunked(times, 3), chunked(events, 3)):
             full_pass = self.serialize_pass(pass_times, pass_events)
-            full_pass["visible"] = any(event["visible"] for event in full_pass.items())
+            full_pass["visible"] = any(event["visible"] for event in full_pass.values())
             passes.append(full_pass)
 
         if visible_only:
