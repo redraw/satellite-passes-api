@@ -16,8 +16,9 @@ def passes(norad_id):
     except ValidationError as err:
         abort(jsonify(err.messages))
     
+    limit = query["limit"]
     tracker = SatTracker(query["lat"], query["lon"], norad_id=norad_id)
-    passes = tracker.get_next_passes(query["limit"])
+    passes = tracker.next_passes()[:limit]
 
     return jsonify(passes)
 
