@@ -15,18 +15,21 @@ def passes(norad_id):
         query = PassesQuery().load(request.args)
     except ValidationError as err:
         abort(jsonify(err.messages))
-    
+
+    lat, lon = query["lat"], query["lon"]
     limit = query["limit"]
     days = query["days"]
-    tracker = SatTracker(query["lat"], query["lon"], norad_id=norad_id)
-    passes = tracker.next_passes(days=days)[:limit]
+    visible_only = query["visible_only"]
 
-    return jsonify(passes)
+    tracker = SatTracker(lat, lon, norad_id=norad_id)
+    passes = tracker.next_passes(days=days, visible_only=visible_only)
+
+    return jsonify(passes[:limit])
 
 
 @api.route('/')
 def docs():
-    with open('README.md') as f:    
+    with open('README.md') as f:
         return markdown.markdown(f.read(), extensions=['fenced_code'])
 
 
