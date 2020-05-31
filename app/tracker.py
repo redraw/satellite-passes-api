@@ -17,7 +17,8 @@ class SatTracker:
     def __init__(self, lat, lon, norad_id=None, horizon=10.0):
         tle = get_tle(norad_id)
         self.horizon = horizon
-        self.timescale = skyfield_load.timescale(builtin=True)
+        self.eph = skyfield_load('de421.bsp')
+        self.timescale = skyfield_load.timescale()
         self.observer = Topos(latitude_degrees=lat, longitude_degrees=lon)
         self.satellite = EarthSatellite(tle["line1"], tle["line2"], tle["name"], self.timescale)
 
@@ -34,19 +35,23 @@ class SatTracker:
         )
 
         for pass_times, pass_events in zip(chunked(times, 3), chunked(events, 3)): 
-            full_pass = self.build_full_pass(pass_times, pass_events)
+            full_pass = self.serialize_pass(pass_times, pass_events)
+            full_pass["visible"] = any(event["is_sunlit"] for event in full_pass.values())
             passes.append(full_pass)
 
         return passes
 
-    def build_full_pass(self, pass_times, pass_events):
+    def serialize_pass(self, pass_times, pass_events):
         full_pass = {}
         for time, event_type in zip(pass_times, pass_events): 
-            alt, az, d = (self.satellite - self.observer).at(time).altaz()
+            topocentric = (self.satellite - self.observer).at(time)
+            alt, az, d = topocentric.altaz()
+            is_sunlit = topocentric.is_sunlit(self.eph)
             event = ('rise', 'culmination', 'set')[event_type]
             full_pass[event] = {
                 "alt": f"{alt.degrees:.2f}", 
                 "az": f"{az.degrees:.2f}", 
-                "utc_datetime": time.utc_datetime()
+                "utc_datetime": time.utc_datetime(),
+                "is_sunlit": bool(is_sunlit)
             }
         return full_pass
