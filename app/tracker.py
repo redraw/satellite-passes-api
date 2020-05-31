@@ -50,8 +50,10 @@ class SatTracker:
             event = ('rise', 'culmination', 'set')[event_type]
             full_pass[event] = {
                 "alt": f"{alt.degrees:.2f}", 
-                "az": f"{az.degrees:.2f}", 
+                "az": f"{az.degrees:.2f}",
+                "az_octant": az_to_octant(az.degrees),
                 "utc_datetime": time.utc_datetime(),
+                "utc_timestamp": int(time.utc_datetime().timestamp()),
                 "is_sunlit": bool(is_sunlit)
             }
         return full_pass

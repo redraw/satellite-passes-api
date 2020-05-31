@@ -17,8 +17,9 @@ def passes(norad_id):
         abort(jsonify(err.messages))
     
     limit = query["limit"]
+    days = query["days"]
     tracker = SatTracker(query["lat"], query["lon"], norad_id=norad_id)
-    passes = tracker.next_passes()[:limit]
+    passes = tracker.next_passes(days=days)[:limit]
 
     return jsonify(passes)
 
