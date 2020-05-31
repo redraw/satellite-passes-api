@@ -62,4 +62,6 @@ The `is_sunlit` tells if satellite is being illuminated by the sun.
 
 The `visible` field actually tells if the satellite will be _probably_ visible, considering the sun is near the horizon, and the observer is at night. You can read more [here](https://www.heavens-above.com/faq.aspx).
 
+Results are cached for 1 day for each parameters combo.
+
 Source code: [github](https://github.com/redraw/satellite-passes-api)

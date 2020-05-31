@@ -63,7 +63,7 @@ class SatTracker:
                 "alt": f"{sat_alt.degrees:.2f}",
                 "az": f"{sat_az.degrees:.2f}",
                 "az_octant": az_to_octant(sat_az.degrees),
-                "utc_datetime": time.utc_datetime(),
+                "utc_datetime": str(time.utc_datetime()),
                 "utc_timestamp": int(time.utc_datetime().timestamp()),
                 "is_sunlit": bool(is_sunlit),
                 "visible": -18 <= int(sun_alt.degrees) <= -6 and bool(is_sunlit)

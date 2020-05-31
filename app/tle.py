@@ -20,7 +20,7 @@ def get_tle(norad_id):
 
     tle = cache.get(cache_key)
     if tle:
-        logger.info(f"cache [HIT] fetched tle norad={norad_id}")
+        logger.info(f"Cache TLE HIT norad={norad_id}")
         return json.loads(tle)
 
     url = f"{NASA_TLE_API_URL}/{norad_id}"
@@ -28,7 +28,7 @@ def get_tle(norad_id):
     response = requests.get(url, {"api_key": NASA_TLE_API_KEY})
     tle = response.json()
 
-    logger.info(f"cache [MISS] saving tle norad={norad_id}")
+    logger.info(f"Cache TLE MISS, saving norad={norad_id}")
     cache.set(cache_key, json.dumps(tle), CACHE_TIMEOUT)
 
     return tle
