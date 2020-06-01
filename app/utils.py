@@ -1,9 +1,8 @@
-import redis
 import math
 from hashlib import md5
+import redis
 
 import settings
-
 
 cache = redis.Redis.from_url(settings.REDIS_URL)
 

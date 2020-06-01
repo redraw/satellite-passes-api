@@ -5,7 +5,6 @@ import requests
 
 from utils import cache
 
-
 NASA_TLE_API_URL = "https://data.ivanstanojevic.me/api/tle"
 NASA_TLE_API_KEY = os.getenv("NASA_TLE_API_KEY")
 CACHE_TIMEOUT = 12 * 60 * 60 # 12 hours
@@ -25,7 +24,7 @@ def get_tle(norad_id):
 
     url = f"{NASA_TLE_API_URL}/{norad_id}"
     assert NASA_TLE_API_KEY is not None, "Missing NASA TLE API Key"
-    response = requests.get(url, {"api_key": NASA_TLE_API_KEY})
+    response = session.get(url, {"api_key": NASA_TLE_API_KEY})
     tle = response.json()
 
     logger.info(f"Cache TLE MISS, saving norad={norad_id}")

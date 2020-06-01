@@ -1,12 +1,13 @@
 import os
 import json
 import logging
+from math import degrees
 from datetime import datetime, timedelta
-from more_itertools import chunked
+
 from skyfield.api import EarthSatellite, Topos
 from skyfield.api import load as skyfield_load
+from more_itertools import chunked
 
-from math import degrees
 from tle import get_tle
 from utils import cache, az_to_octant
 
@@ -14,13 +15,14 @@ logger = logging.getLogger(__name__)
 
 
 class SatTracker:
+    """Satellite tracker for observer."""
+
     def __init__(self, lat, lon, norad_id=None, horizon=10.0):
         self.eph = skyfield_load("de421.bsp")
-        self.observer = Topos(latitude_degrees=lat, longitude_degrees=lon)
         self.timescale = skyfield_load.timescale()
-        self.sun = self.eph["sun"]
         self.horizon = horizon
         tle = get_tle(norad_id)
+        self.observer = Topos(latitude_degrees=lat, longitude_degrees=lon)
         self.satellite = EarthSatellite(tle["line1"], tle["line2"], tle["name"], self.timescale)
 
     def next_passes(self, days=7, visible_only=False):
@@ -31,15 +33,24 @@ class SatTracker:
             now.utc_datetime() + timedelta(days=days)
         )
 
+        # Find satellite events for observer
         times, events = self.satellite.find_events(
             self.observer, t0, t1, altitude_degrees=self.horizon
         )
 
+        # Each pass is composed by 3 events (rise, culmination, set)
+        # Start arrays on next first pass
+        offset = len(events) % 3
+        times = times[offset:]
+        events = events[offset:]
+
+        # Loop for each pass (3 events)
         for pass_times, pass_events in zip(chunked(times, 3), chunked(events, 3)):
             full_pass = self.serialize_pass(pass_times, pass_events)
             full_pass["visible"] = any(event["visible"] for event in full_pass.values())
             passes.append(full_pass)
 
+        # Filter visible ones
         if visible_only:
             passes = [p for p in passes if p["visible"]]
 
