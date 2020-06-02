@@ -29,39 +29,39 @@ Response example,
   {
     "rise": {
       "alt": "10.00",
-      "az": "264.51",
-      "az_octant": "N",
-      "is_sunlit": true,
-      "utc_datetime": "Mon, 01 Jun 2020 14:19:29 GMT",
-      "utc_timestamp": 1591021169,
+      "az": "317.05",
+      "az_octant": "NW",
+      "utc_datetime": "2020-06-02 05:22:20.959562+00:00",
+      "utc_timestamp": 1591075340,
+      "is_sunlit": false,
       "visible": false
     },
     "culmination": {
-      "alt": "17.38",
-      "az": "308.01",
-      "az_octant": "N",
-      "is_sunlit": true,
-      "utc_datetime": "Mon, 01 Jun 2020 14:21:49 GMT",
-      "utc_timestamp": 1591021309,
+      "alt": "79.94",
+      "az": "44.48",
+      "az_octant": "NE",
+      "utc_datetime": "2020-06-02 05:25:44.705872+00:00",
+      "utc_timestamp": 1591075544,
+      "is_sunlit": false,
       "visible": false
     },
     "set": {
-      "alt": "9.98",
-      "az": "351.63",
-      "az_octant": "NW",
-      "is_sunlit": true,
-      "utc_datetime": "Mon, 01 Jun 2020 14:24:08 GMT",
-      "utc_timestamp": 1591021448,
+      "alt": "10.00",
+      "az": "130.38",
+      "az_octant": "SE",
+      "utc_datetime": "2020-06-02 05:29:10.634226+00:00",
+      "utc_timestamp": 1591075750,
+      "is_sunlit": false,
       "visible": false
     },
     "visible": false
   }
 ]
 ```
-The `is_sunlit` tells if satellite is being illuminated by the sun.
+- `alt`/`az` are measured in degrees.
+- `is_sunlit` tells if satellite is being illuminated by the sun.
+- `visible` field tells if the satellite will be _probably_ visible, considering the sun is near the horizon, and the observer is at night. You can read more [here](https://www.heavens-above.com/faq.aspx).
 
-The `visible` field actually tells if the satellite will be _probably_ visible, considering the sun is near the horizon, and the observer is at night. You can read more [here](https://www.heavens-above.com/faq.aspx).
-
-Results are cached for 1 day for each parameters combo.
+Note: Results are cached 1 day for each parameters combo.
 
 Source code: [github](https://github.com/redraw/satellite-passes-api)
