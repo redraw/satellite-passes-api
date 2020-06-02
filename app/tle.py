@@ -24,7 +24,7 @@ def get_tle(norad_id):
 
     url = f"{NASA_TLE_API_URL}/{norad_id}"
     assert NASA_TLE_API_KEY is not None, "Missing NASA TLE API Key"
-    response = session.get(url, {"api_key": NASA_TLE_API_KEY})
+    response = session.get(url, params={"api_key": NASA_TLE_API_KEY})
     tle = response.json()
 
     logger.info(f"Cache TLE MISS, saving norad={norad_id}")
