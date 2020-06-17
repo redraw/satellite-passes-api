@@ -1,4 +1,5 @@
 import json
+import logging
 from datetime import timedelta
 
 from flask import Flask, Response, request, abort, jsonify
@@ -11,6 +12,7 @@ from utils import cache, get_cache_key
 
 
 api = Flask('api')
+api.logger.setLevel(logging.INFO)
 
 
 @api.route('/passes/<int:norad_id>')
@@ -20,7 +22,7 @@ def passes(norad_id):
     except ValidationError as err:
         abort(jsonify(err.messages))
 
-    limit = query["limit"]
+    limit = query.pop('limit')
     cache_key = get_cache_key(norad_id, query, prefix="passes")
     cache_response = cache.get(cache_key)
 

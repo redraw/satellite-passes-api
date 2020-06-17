@@ -8,7 +8,7 @@ cache = redis.Redis.from_url(settings.REDIS_URL)
 
 
 def get_cache_key(*args, prefix=""):
-    payload = "".join(str(arg) for arg in args).encode('utf8')
+    payload = ":".join(str(arg) for arg in args).encode('utf8')
     return f"{prefix}:{md5(payload).hexdigest()}"
 
 
