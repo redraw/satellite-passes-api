@@ -10,7 +10,7 @@ from tracker import SatTracker
 from utils import cache, get_cache_key
 
 
-api = Flask(__name__)
+api = Flask('api')
 
 
 @api.route('/passes/<int:norad_id>')
@@ -20,28 +20,31 @@ def passes(norad_id):
     except ValidationError as err:
         abort(jsonify(err.messages))
 
+    limit = query["limit"]
     cache_key = get_cache_key(norad_id, query, prefix="passes")
     cache_response = cache.get(cache_key)
 
+    # Return results from cache if hit
     if cache_response:
-        return Response(cache_response, headers={
+        passes = json.loads(cache_response)
+        return Response(json.dumps(passes[:limit]), headers={
             "x-api-cache": "HIT",
             "x-api-cache-ttl": f"{cache.ttl(cache_key)}",
             "content-type": "application/json"
         })
 
+    # Calculate next passes
     tracker = SatTracker(query["lat"], query["lon"], norad_id=norad_id)
-    limit = query["limit"]
-
     passes = tracker.next_passes(
         days=query["days"],
         visible_only=query["visible_only"]
-    )[:limit]
+    )
 
+    # Cache passes for 1 day
     content = json.dumps(passes)
     cache.set(cache_key, content, ex=timedelta(days=1))
 
-    return Response(content, headers={
+    return Response(json.dumps(passes[:limit]), headers={
         "x-api-cache": "MISS",
         "content-type": "application/json"
     })

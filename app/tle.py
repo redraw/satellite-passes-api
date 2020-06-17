@@ -9,7 +9,7 @@ NASA_TLE_API_URL = "https://data.ivanstanojevic.me/api/tle"
 NASA_TLE_API_KEY = os.getenv("NASA_TLE_API_KEY")
 CACHE_TIMEOUT = 12 * 60 * 60 # 12 hours
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('api.tle')
 session = requests.Session()
 
 

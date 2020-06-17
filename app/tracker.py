@@ -1,6 +1,5 @@
 import os
 import json
-import logging
 from math import degrees
 from datetime import datetime, timedelta
 
@@ -11,7 +10,6 @@ from more_itertools import chunked
 from tle import get_tle
 from utils import cache, az_to_octant
 
-logger = logging.getLogger(__name__)
 
 
 class SatTracker:
