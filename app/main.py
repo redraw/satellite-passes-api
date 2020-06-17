@@ -8,7 +8,7 @@ import markdown
 
 from schemas import PassesQuery
 from tracker import SatTracker
-from utils import cache, get_cache_key
+from utils import cache, get_cache_key, filter_next_passes
 
 
 api = Flask('api')
@@ -29,7 +29,8 @@ def passes(norad_id):
     # Return results from cache if hit
     if cache_response:
         passes = json.loads(cache_response)
-        return Response(json.dumps(passes[:limit]), headers={
+        next_passes = filter_next_passes(passes)
+        return Response(json.dumps(next_passes[:limit]), headers={
             "x-api-cache": "HIT",
             "x-api-cache-ttl": f"{cache.ttl(cache_key)}",
             "content-type": "application/json"

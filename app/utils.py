@@ -1,4 +1,5 @@
 import math
+import time
 from hashlib import md5
 import redis
 
@@ -16,3 +17,10 @@ def az_to_octant(azimuth):
     octants = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW']
     idx = (int(azimuth) / 360) * 8
     return octants[round(idx) % 8]
+
+
+def filter_next_passes(passes):
+    return [
+        p for p in passes
+        if p["rise"]["utc_timestamp"] > time.time()
+    ]
