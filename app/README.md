@@ -2,7 +2,7 @@
 
 Query next passes for a given satellite above you.
 
-Uses [Skyfield](https://github.com/skyfielders/python-skyfield) to predict passes (great library!), and [Nasa TLE API](https://github.com/ivanstan/tle-api) to get TLE updated data taken from the greatest [CelesTrak](https://celestrak.com) website.
+Uses [Skyfield](https://github.com/skyfielders/python-skyfield) to predict passes, and [Nasa TLE API](https://github.com/ivanstan/tle-api) to get TLE updated data taken from the greatest [CelesTrak](https://celestrak.com) website.
 
 ## API
 ### `GET /passes/<norad-id>`

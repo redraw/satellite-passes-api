@@ -6,4 +6,4 @@ requests==2.23.0
 marshmallow==3.5.2
 Markdown==3.2.1
 more-itertools==8.2.0
-skyfield==1.21
+skyfield==1.16
