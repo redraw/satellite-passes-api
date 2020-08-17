@@ -22,5 +22,5 @@ def az_to_octant(azimuth):
 def filter_next_passes(passes):
     return [
         p for p in passes
-        if p["rise"]["utc_timestamp"] > time.time()
+        if p["set"]["utc_timestamp"] > time.time()
     ]
