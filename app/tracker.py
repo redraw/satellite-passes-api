@@ -11,7 +11,6 @@ from tle import get_tle
 from utils import cache, az_to_octant
 
 
-
 class SatTracker:
     """Satellite tracker for observer."""
 
@@ -21,7 +20,7 @@ class SatTracker:
         self.horizon = horizon
         tle = get_tle(norad_id)
         self.observer = Topos(latitude_degrees=lat, longitude_degrees=lon)
-        self.satellite = EarthSatellite(tle["line1"], tle["line2"], tle["name"], self.timescale)
+        self.satellite = EarthSatellite(tle[1], tle[2], tle[0], self.timescale)
 
     def next_passes(self, days=7, visible_only=False):
         passes = []

@@ -5,7 +5,7 @@ import redis
 
 import settings
 
-cache = redis.Redis.from_url(settings.REDIS_URL)
+cache = redis.Redis.from_url(settings.REDIS_URL, decode_responses=True)
 
 
 def get_cache_key(*args, prefix=""):

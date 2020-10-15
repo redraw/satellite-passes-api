@@ -2,7 +2,7 @@
 
 Query next passes for a given satellite above you.
 
-Uses [Skyfield](https://github.com/skyfielders/python-skyfield) to predict passes, and [Nasa TLE API](https://github.com/ivanstan/tle-api) to get TLE updated data taken from the greatest [CelesTrak](https://celestrak.com) website.
+Uses [Skyfield](https://github.com/skyfielders/python-skyfield) to predict passes, and [Celestrak GP API](https://celestrak.com/NORAD/documentation/gp-data-formats.php) to get updated TLE data.
 
 ## API
 ### `GET /passes/<norad-id>`
@@ -62,6 +62,6 @@ Response example,
 - `is_sunlit` tells if satellite is being illuminated by the sun.
 - `visible` field tells if the satellite will be _probably_ visible, considering the sun is near the horizon, and the observer is at night. You can read more [here](https://www.heavens-above.com/faq.aspx).
 
-Note: Results are cached 1 day for each parameters combo.
+Note: Results are cached 1 day for each parameters combo, except `limit`.
 
 Source code: [github](https://github.com/redraw/satellite-passes-api)
