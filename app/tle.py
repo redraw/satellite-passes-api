@@ -12,6 +12,10 @@ logger = logging.getLogger('api.tle')
 session = requests.Session()
 
 
+class TLENotFound(Exception):
+    pass
+
+
 def get_tle(norad_id):
     """Get latest TLE from API"""
     cache_key = f"tle:{norad_id}"
@@ -26,7 +30,12 @@ def get_tle(norad_id):
         "FORMAT": "TLE"
     })
 
-    logger.info(f"Cache TLE MISS, saving norad={norad_id}")
-    cache.set(cache_key, response.content, CACHE_TIMEOUT)
+    tle = response.text
 
-    return tle
+    if tle == "No GP data found":
+        raise TLENotFound
+
+    logger.info(f"Cache TLE MISS, saving norad={norad_id}")
+    cache.set(cache_key, tle, CACHE_TIMEOUT)
+
+    return tle.split("\n")

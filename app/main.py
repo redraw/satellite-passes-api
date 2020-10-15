@@ -9,6 +9,7 @@ import markdown
 from schemas import PassesQuery
 from tracker import SatTracker
 from utils import cache, get_cache_key, filter_next_passes
+from tle import TLENotFound
 
 
 api = Flask('api')
@@ -20,7 +21,7 @@ def passes(norad_id):
     try:
         query = PassesQuery().load(request.args)
     except ValidationError as err:
-        abort(jsonify(err.messages))
+        return jsonify(err.messages), 400
 
     limit = query.pop('limit')
     cache_key = get_cache_key(norad_id, query, prefix="passes")
@@ -37,7 +38,11 @@ def passes(norad_id):
         })
 
     # Calculate next passes
-    tracker = SatTracker(query["lat"], query["lon"], norad_id=norad_id)
+    try:
+        tracker = SatTracker(query["lat"], query["lon"], norad_id=norad_id)
+    except TLENotFound:
+        return jsonify({"error": "TLE not found"}), 400
+
     passes = tracker.next_passes(
         days=query["days"],
         visible_only=query["visible_only"]
