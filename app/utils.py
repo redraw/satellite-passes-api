@@ -15,8 +15,8 @@ def get_cache_key(*args, prefix=""):
 
 def az_to_octant(azimuth):
     octants = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW']
-    idx = (int(azimuth) / 360) * 8
-    return octants[round(idx) % 8]
+    idx = (int(azimuth) / 360) * octants.length
+    return octants[round(idx) % octants.length]
 
 
 def filter_next_passes(passes):
