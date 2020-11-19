@@ -3,6 +3,7 @@ import logging
 from datetime import timedelta
 
 from flask import Flask, Response, request, abort, jsonify
+from flask_cors import CORS
 from marshmallow import ValidationError
 import markdown
 
@@ -14,6 +15,7 @@ from tle import TLENotFound
 
 api = Flask('api')
 api.logger.setLevel(logging.INFO)
+CORS(api)
 
 
 @api.route('/passes/<int:norad_id>')
