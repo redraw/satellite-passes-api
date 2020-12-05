@@ -8,3 +8,4 @@ Markdown==3.2.1
 more-itertools==8.2.0
 skyfield==1.26
 Flask-Cors==3.0.9
+flask-swagger-ui==3.36.0
