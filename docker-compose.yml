@@ -1,0 +1,10 @@
+version: '3'
+services:
+  web:
+    build: .
+    environment:
+      - FLY_REDIS_CACHE_URL=redis://redis
+    ports:
+      - '8000:8000'
+  redis:
+    image: redis
