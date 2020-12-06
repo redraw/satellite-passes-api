@@ -65,3 +65,7 @@ Response example,
 Note: Results are cached 1 day for each parameters combo, except `limit`.
 
 Source code: [github](https://github.com/redraw/satellite-passes-api)
+
+You can find Open API specification [here](https://github.com/redraw/satellite-passes-api/blob/master/app/static/openapi.json)
+
+Swagger UI is available at `https://satellites.fly.dev/docs`

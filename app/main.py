@@ -4,6 +4,7 @@ from datetime import timedelta
 
 from flask import Flask, Response, request, abort, jsonify
 from flask_cors import CORS
+from flask_swagger_ui import get_swaggerui_blueprint
 from marshmallow import ValidationError
 import markdown
 
@@ -65,6 +66,22 @@ def docs():
     with open('README.md') as f:
         return markdown.markdown(f.read(), extensions=['fenced_code'])
 
+
+API_SPEC_URL = "/openapi.json"
+
+
+@api.route(API_SPEC_URL)
+def api_spec():
+    return api.send_static_file("openapi.json")
+
+
+swaggerui_blueprint = get_swaggerui_blueprint(
+    base_url="/docs",
+    api_url=API_SPEC_URL,
+    config={"app_name": "Satellite Passes API"}
+)
+
+api.register_blueprint(swaggerui_blueprint)
 
 if __name__ == '__main__':
     api.run(port=8000, debug=True)

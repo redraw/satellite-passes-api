@@ -1,0 +1,234 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Satellite Passes API",
+    "description": "Query next passes for a given satellite above you.",
+    "version": "0.1.0"
+  },
+  "servers": [
+    {"url": "https://satellites.fly.dev/"},
+    {"url": "http://0.0.0.0:8000/"}
+  ],
+  "paths": {
+    "/passes/{norad_id}": {
+      "get": {
+        "tags": ["Satellite Passes"],
+        "parameters": [
+          {
+            "name": "norad_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 999999999
+            }
+          },
+          {
+            "name": "lat",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "minimum": -90.0,
+              "maximum": 90.0
+            }
+          },
+          {
+            "name": "lon",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "minimum": -180.0,
+              "maximum": 180.0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 100
+            }
+          },
+          {
+            "name": "days",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 15,
+              "default": 7
+            }
+          },
+          {
+            "name": "visible_only",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SatellitePass"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/ValidationError"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SatellitePass": {
+        "type": "object",
+        "properties": {
+          "rise": {
+            "$ref": "#/components/schemas/Event"
+          },
+          "culmination": {
+            "$ref": "#/components/schemas/Event"
+          },
+          "set": {
+            "$ref": "#/components/schemas/Event"
+          },
+          "visible": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "visible"
+        ]
+      },
+      "Event": {
+        "type": "object",
+        "title": "Event",
+        "required": [
+          "alt",
+          "az",
+          "az_octant",
+          "utc_datetime",
+          "utc_timestamp",
+          "is_sunlit",
+          "visible"
+        ],
+        "properties": {
+          "alt": {
+            "type": "string",
+            "title": "Altitude",
+            "description": "Altitude above the horizon. In degrees."
+          },
+          "az": {
+            "type": "string",
+            "title": "Azimuth",
+            "description": "The angle between the satellite and the North. In degrees."
+          },
+          "az_octant": {
+            "type": "string",
+            "title": "Azimuth octant",
+            "enum": [
+              "N",
+              "NE",
+              "E",
+              "SE",
+              "S",
+              "SW",
+              "W",
+              "NW"
+            ]
+          },
+          "utc_datetime": {
+            "type": "string",
+            "title": "UTC date-time",
+            "format": "date-time"
+          },
+          "utc_timestamp": {
+            "type": "integer",
+            "title": "UTC timestamp",
+            "minimum": 0
+          },
+          "is_sunlit": {
+            "type": "boolean",
+            "title": "Is sunlit",
+            "description": "If satellite is being illuminated by the sun."
+          },
+          "visible": {
+            "type": "boolean",
+            "title": "Visible",
+            "description": "If the satellite will be probably visible, considering the sun is near the horizon, and the observer is at night."
+          }
+        }
+      },
+      "ValidationError": {
+        "type": "object",
+        "properties": {
+          "lat": {
+            "$ref": "#/components/schemas/FieldError"
+          },
+          "lon": {
+            "$ref": "#/components/schemas/FieldError"
+          },
+          "limit": {
+            "$ref": "#/components/schemas/FieldError"
+          },
+          "days": {
+            "$ref": "#/components/schemas/FieldError"
+          },
+          "visible_only": {
+            "$ref": "#/components/schemas/FieldError"
+          }
+        }
+      },
+      "FieldError": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
