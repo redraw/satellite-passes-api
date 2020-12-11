@@ -4,6 +4,8 @@ Query next passes for a given satellite above you.
 
 Uses [Skyfield](https://github.com/skyfielders/python-skyfield) to predict passes, and [Celestrak GP API](https://celestrak.com/NORAD/documentation/gp-data-formats.php) to get updated TLE data.
 
+[GitHub](https://github.com/redraw/satellite-passes-api) | [Docs](https://satellites.fly.dev/docs) | [openapi.json](https://github.com/redraw/satellite-passes-api/blob/master/app/static/openapi.json)
+
 ## API
 ### `GET /passes/<norad-id>`
 
@@ -63,9 +65,3 @@ Response example,
 - `visible` field tells if the satellite will be _probably_ visible, considering the sun is near the horizon, and the observer is at night. You can read more [here](https://www.heavens-above.com/faq.aspx).
 
 Note: Results are cached 1 day for each parameters combo, except `limit`.
-
-Source code: [github](https://github.com/redraw/satellite-passes-api)
-
-You can find Open API specification [here](https://github.com/redraw/satellite-passes-api/blob/master/app/static/openapi.json)
-
-Swagger UI is available at `https://satellites.fly.dev/docs`
