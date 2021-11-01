@@ -2,7 +2,7 @@ import json
 import logging
 from datetime import timedelta
 
-from flask import Flask, Response, request, abort, jsonify
+from flask import Flask, Response, request, jsonify
 from flask_cors import CORS
 from flask_swagger_ui import get_swaggerui_blueprint
 from marshmallow import ValidationError
@@ -67,17 +67,14 @@ def docs():
         return markdown.markdown(f.read(), extensions=['fenced_code'])
 
 
-API_SPEC_URL = "/openapi.json"
-
-
-@api.route(API_SPEC_URL)
+@api.route("/openapi.json")
 def api_spec():
     return api.send_static_file("openapi.json")
 
 
 swaggerui_blueprint = get_swaggerui_blueprint(
     base_url="/docs",
-    api_url=API_SPEC_URL,
+    api_url="/openapi.json",
     config={"app_name": "Satellite Passes API"}
 )
 

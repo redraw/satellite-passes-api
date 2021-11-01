@@ -1,14 +1,11 @@
-import os
-import json
-from math import degrees
-from datetime import datetime, timedelta
+from datetime import timedelta
 
-from skyfield.api import EarthSatellite, Topos
+from skyfield.api import EarthSatellite, wgs84
 from skyfield.api import load as skyfield_load
 from more_itertools import chunked
 
 from tle import get_tle
-from utils import cache, az_to_octant
+from utils import az_to_octant
 
 
 class SatTracker:
@@ -19,7 +16,7 @@ class SatTracker:
         self.timescale = skyfield_load.timescale()
         self.horizon = horizon
         tle = get_tle(norad_id)
-        self.observer = Topos(latitude_degrees=lat, longitude_degrees=lon)
+        self.observer = wgs84.latlon(lat, lon)
         self.satellite = EarthSatellite(tle[1], tle[2], tle[0], self.timescale)
 
     def next_passes(self, days=7, visible_only=False):
@@ -55,11 +52,11 @@ class SatTracker:
 
     def serialize_pass(self, pass_times, pass_events):
         full_pass = {}
-        observer_barycenter = self.eph["earth"] + self.observer
+        topocentric = self.eph["earth"] + self.observer
 
         for time, event_type in zip(pass_times, pass_events):
             geometric_sat = (self.satellite - self.observer).at(time)
-            geometric_sun = (self.eph["sun"] - observer_barycenter).at(time)
+            geometric_sun = (self.eph["sun"] - topocentric).at(time)
 
             sat_alt, sat_az, sat_d = geometric_sat.altaz()
             sun_alt, sun_az, sun_d = geometric_sun.altaz()

@@ -1,6 +1,7 @@
 __pycache__/
 .venv
 .env
+.python-version
 
 de421.bsp
 deltat.data
