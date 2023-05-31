@@ -6,6 +6,7 @@ Uses [Skyfield](https://github.com/skyfielders/python-skyfield) to predict passe
 
 [GitHub](https://github.com/redraw/satellite-passes-api) | [Docs](https://satellites.fly.dev/docs) | [openapi.json](https://github.com/redraw/satellite-passes-api/blob/master/app/static/openapi.json)
 
+
 ## API
 ### `GET /passes/<norad-id>`
 
@@ -65,3 +66,23 @@ Response example,
 - `visible` field tells if the satellite will be _probably_ visible, considering the sun is near the horizon, and the observer is at night. You can read more [here](https://www.heavens-above.com/faq.aspx).
 
 Note: Results are cached 1 day for each parameters combo, except `limit`.
+
+## Installation
+
+```commandline
+git clone https://github.com/redraw/satellite-passes-api
+cd satellite-passes-api
+pip install -r requirements.txt
+sudo apt install redis
+```
+
+## Usage
+
+In separate terminals:
+
+`redis-server`
+
+```
+cd app
+python main.py
+```
