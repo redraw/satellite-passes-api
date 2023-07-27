@@ -8,15 +8,26 @@ Uses [Skyfield](https://github.com/skyfielders/python-skyfield) to predict passe
 
 ## API
 ### `GET /passes/<norad-id>`
-
-Parameters:
-
+---
+`Parameters`:
+`Flask`==`1.1.2`
+`redis`==`3.5.0`
+`hiredis`==`1.0.1`
+`gunicorn`==`20.0.4`
+`requests`==`2.23.0`
+`marshmallow`==`3.5.2`
+`Markdown`==`3.2.1`
+`more-itertools`==`8.2.0`
+`skyfield`==`1.39`
+`Flask-Cors`==`3.0.9`
+`flask-swagger-ui`==`3.36.0`
+`+itsdangerous`==`2.0.1`
 - `lat` latitude (required)
 - `lon` longitude (required)
 - `limit` number of next passes
 - `days` number of days to calculate passes ahead
 - `visible_only` can be `true`/`false`, filter passes by visible passes only
-
+---
 ```
 GET /passes/25544?lat=-34.9112212&lon=-57.9372988&limit=1 HTTP/1.1
 Accept: */*
