@@ -1,4 +1,4 @@
-# |---------------------------------------
+# |
 # |# 🛰️ Groundtrack API
 # | }
 # | }{'''Query next passes for a given satellite above you.'''
@@ -10,7 +10,7 @@
 # | [GitHub](https://github.com/redraw/satellite-passes-api) 
 # | [Docs](https://satellites.fly.dev/docs) 
 # | [openapi.json](https://github.com/redraw/satellite-passes-api/blob/master/app/static/openapi.json)
-# | -----------------------------------------------------------
+-----------------------------------------------------------
 # | ``## `API`
 # | `### `GET /passes/<norad-id>`
 # | `Schema`".$_-0/"`=
@@ -144,7 +144,7 @@
 # |`      "alt": "79.94",
 # |`      "az": "44.48",
 # |`      "az_octant": "NE",
-`      "utc_datetime": "2020-06-02 05:25:44.705872+00:00",
+# |`      "utc_datetime": "2020-06-02 05:25:44.705872+00:00",
 # |`      "utc_timestamp": 1591075544,
 # |`      "visible": false    },
 # |`    "set": {
@@ -165,4 +165,4 @@
 # |`- `visible` field tells if the satellite will be _probably_ visible, considering the sun is near the horizon, and the observer is at night. You can # |`read more [here](https://www.heavens-above.com/faq.aspx).
 # |`
 # |`Note: Results are cached 1 day for each parameters combo, except `limit`.`
-# |`
+# |----------------------------------------------------`
