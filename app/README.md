@@ -1,23 +1,18 @@
 # |
-# |# 🛰️ Groundtrack API
-# | }
-# | }{'''Query next passes for a given satellite above you.'''
+# 🛰️ Groundtrack API Query next passes for a given satellite above you.
 # |
-# | Uses}
+# Uses
 # | [Skyfield](https://github.com/skyfielders/python-skyfield) to predict passes, and 
 # | [Celestrak GP API](https://celestrak.com/NORAD/documentation/gp-data-formats.php) to get updated TLE data.
-# |
 # | [GitHub](https://github.com/redraw/satellite-passes-api) 
 # | [Docs](https://satellites.fly.dev/docs) 
 # | [openapi.json](https://github.com/redraw/satellite-passes-api/blob/master/app/static/openapi.json)
 -----------------------------------------------------------
-# | ``## `API`
-# | `### `GET /passes/<norad-id>`
-# | `Schema`".$_-0/"`=
-# | `enum referenceFrame` : 
-# | `.$_-0/
-# | `byte {
-# |`/// Earth Mean Equator and Equinox of J2000
+## API ### GET 
+`/passes/<norad-id>`
+`"Schema".$_-0/"=enum referenceFrame:` 
+ `.$_-0/byte {`
+`/// Earth Mean Equator and Equinox of J2000`
 # |`EME2000,
 # |`///  Geocentric Celestial Reference Frame
 # |`GCRF,
