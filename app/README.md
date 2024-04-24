@@ -1,4 +1,4 @@
-# 🛰️ Groundtrack API
+# 🛰️ Satellite Passes API
 
 Query next passes for a given satellite above you.
 

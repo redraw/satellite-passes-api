@@ -37,6 +37,7 @@ def passes(norad_id):
         return Response(json.dumps(next_passes[:limit]), headers={
             "x-api-cache": "HIT",
             "x-api-cache-ttl": f"{cache.ttl(cache_key)}",
+            "cache-control": f"public, max-age={cache.ttl(cache_key)}",
             "content-type": "application/json"
         })
 
