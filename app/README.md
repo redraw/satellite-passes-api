@@ -22,7 +22,7 @@ GET /passes/25544?lat=-34.9112212&lon=-57.9372988&limit=1 HTTP/1.1
 Accept: */*
 Accept-Encoding: gzip, deflate
 Connection: keep-alive
-Host: satellites.fly.dev
+Host: sat.terrestre.ar
 User-Agent: HTTPie/1.0.3
 ```
 Response example,

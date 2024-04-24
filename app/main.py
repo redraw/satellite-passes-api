@@ -1,8 +1,9 @@
+import os
 import json
 import logging
 from datetime import timedelta
 
-from flask import Flask, Response, request, jsonify
+from flask import Flask, Response, request, jsonify, redirect
 from flask_cors import CORS
 from flask_swagger_ui import get_swaggerui_blueprint
 from marshmallow import ValidationError
@@ -17,6 +18,17 @@ from tle import TLENotFound
 api = Flask('api')
 api.logger.setLevel(logging.INFO)
 CORS(api)
+
+
+@api.before_request
+def redirect_to_custom_domain():
+    custom_domain = os.getenv('CUSTOM_DOMAIN')
+    if (
+        custom_domain and
+        "FLY_APP_NAME" in os.environ and
+        request.host == f"{os.getenv('FLY_APP_NAME')}.fly.dev"
+    ):
+        return redirect(f'https://{custom_domain}{request.full_path}', code=301)
 
 
 @api.route('/passes/<int:norad_id>')
