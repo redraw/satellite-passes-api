@@ -5,7 +5,7 @@ import requests
 
 from utils import cache
 
-CELESTRAK_API_TLE = "https://celestrak.com/NORAD/elements/gp.php"
+CELESTRAK_API_TLE = "https://celestrak.org/NORAD/elements/gp.php"
 CACHE_TIMEOUT = 12 * 60 * 60 # 12 hours
 
 logger = logging.getLogger('api.tle')
