@@ -6,7 +6,7 @@
     "version": "0.1.0"
   },
   "servers": [
-    {"url": "https://satellites.fly.dev/"},
+    {"url": "https://sat.terrestre.ar/"},
     {"url": "http://0.0.0.0:8000/"}
   ],
   "paths": {

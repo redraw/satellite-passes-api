@@ -17,6 +17,8 @@ Parameters:
 - `days` number of days to calculate passes ahead
 - `visible_only` can be `true`/`false`, filter passes by visible passes only
 
+#### Response example
+
 ```
 GET /passes/25544?lat=-34.9112212&lon=-57.9372988&limit=1 HTTP/1.1
 Accept: */*
@@ -24,9 +26,8 @@ Accept-Encoding: gzip, deflate
 Connection: keep-alive
 Host: sat.terrestre.ar
 User-Agent: HTTPie/1.0.3
-```
-Response example,
-```
+
+
 [
   {
     "rise": {
@@ -60,8 +61,10 @@ Response example,
   }
 ]
 ```
+Notes:
+
 - `alt`/`az` are measured in degrees.
 - `is_sunlit` tells if satellite is being illuminated by the sun.
 - `visible` field tells if the satellite will be _probably_ visible, considering the sun is near the horizon, and the observer is at night. You can read more [here](https://www.heavens-above.com/faq.aspx).
 
-Note: Results are cached 1 day for each parameters combo, except `limit`.
+Results are cached 1 day for each parameters combo, except `limit`.
