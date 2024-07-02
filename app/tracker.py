@@ -15,6 +15,7 @@ class SatTracker:
         self.eph = skyfield_load("de421.bsp")
         self.timescale = skyfield_load.timescale()
         self.horizon = horizon
+        self.norad_id = norad_id
         tle = get_tle(norad_id)
         self.observer = wgs84.latlon(lat, lon)
         self.satellite = EarthSatellite(tle[1], tle[2], tle[0], self.timescale)
@@ -42,6 +43,7 @@ class SatTracker:
         for pass_times, pass_events in zip(chunked(times, 3), chunked(events, 3)):
             full_pass = self.serialize_pass(pass_times, pass_events)
             full_pass["visible"] = any(event["visible"] for event in full_pass.values())
+            full_pass["norad_id"] = self.norad_id
             passes.append(full_pass)
 
         # Filter visible ones

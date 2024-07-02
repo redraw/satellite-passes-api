@@ -57,6 +57,7 @@ User-Agent: HTTPie/1.0.3
       "is_sunlit": false,
       "visible": false
     },
+    "norad_id": 25544,
     "visible": false
   }
 ]
